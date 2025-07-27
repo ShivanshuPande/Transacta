@@ -22,11 +22,7 @@ const ThemeImage = (props: Props) => {
 export default function Home() {
   return (
     <div>
-      <div className="text-red-500 flex justify-center items-center">
-          Hello there !!!
-      </div>
-      <div>
-      <Card/></div>
+      Hello there
     </div>
   );
 }
