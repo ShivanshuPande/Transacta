@@ -1,8 +1,8 @@
 import { db } from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { PassThrough } from "stream";
-import { createSecretKey } from "crypto";
+
+// providers needs the three --- credentialsProvider(getting the credentials , authorizing it , create it ) , secret , callbacks
 
 export const authOptions = {
     providers :[
