@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "tailwindcss";
+import Appbar from "@repo/ui/components/appbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+
       <body>
+        <Appbar/> 
         {children}
       </body>
     </html>
