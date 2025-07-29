@@ -20,8 +20,54 @@ model User {
   name     String?
   number    String @unique
   password  String
+  onRampTransaction onRampTransaction[]
+  Balance Balance[]
 }
 
+model onRampTransaction {
+  id      Int @id @default(autoincrement())
+  status  String
+  token   String 
+  provider String
+  amount   Int
+  startTime DateTime
+  userId    Int @unique
+  user      User @relation(fields: [userId] , references: [id])
+}
+
+// model onRampTransaction {
+//   id        Int  @id @default(autoincrement())
+//   status    onRampStatus
+//   token     String
+//   provider  String
+//   amount    Int
+//   startTime DateTime
+//   userId    Int
+//   // user      User  @relation(fields : [userId]  references: [id])
+//   user      User @relation(fields :[userId] references: [id])
+
+// }
+
+
+model Balance{
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique
+  amount Int 
+  locked Int
+  user   User @relation(fields: [userId] ,references: [id])
+}
+
+enum AuthType {
+  Google 
+  Facebook
+}
+
+
+enum onRampStatus {
+  Success 
+  Failure
+  Processing
+}
 //model transaction
 // model balance
 // model Transfer 
