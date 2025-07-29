@@ -1,7 +1,6 @@
-import { db } from "@repo/db/client";
+import  db  from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { number } from "zod";
 
 // providers needs the three --- credentialsProvider(getting the credentials(name , credentials) , authorizing it , create it ) , secret , callbacks
 
@@ -14,7 +13,7 @@ export const authOptions = {
                 password : {label : "Password"  , type : 'password' , placeholder : "password"}
             }, 
 
-            async authorize(credentials:any) {
+            async authorize(credentials:any) { 
                 const hashedPassword = await bcrypt.hash(credentials.password , 0 );
                 const existingUser = await db.user.findFirst({
                     where : {
@@ -23,6 +22,8 @@ export const authOptions = {
                 });
 
                 if(existingUser){
+                    console.log(`number from the DB of the user ${existingUser.number}`)
+                    console.log(`the password of the user from the DB is ${existingUser.password}`)
                     const passwordValidation = await bcrypt.compare(credentials.password , existingUser.password);
                     if(passwordValidation){
                         return {
