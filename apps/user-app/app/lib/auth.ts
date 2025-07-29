@@ -1,15 +1,16 @@
 import { db } from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { number } from "zod";
 
-// providers needs the three --- credentialsProvider(getting the credentials , authorizing it , create it ) , secret , callbacks
+// providers needs the three --- credentialsProvider(getting the credentials(name , credentials) , authorizing it , create it ) , secret , callbacks
 
 export const authOptions = {
     providers :[
         CredentialsProvider({
             name:'Credentials',
             credentials:{
-                phone: {label: "Phone Number" , type : 'text' , placeholder : "97XXXXXX09" , required :true}, 
+                number: {label: "Phone Number" , type : 'text' , placeholder : "97XXXXXX09" , required :true}, 
                 password : {label : "Password"  , type : 'password' , placeholder : "password"}
             }, 
 
@@ -17,7 +18,7 @@ export const authOptions = {
                 const hashedPassword = await bcrypt.hash(credentials.password , 0 );
                 const existingUser = await db.user.findFirst({
                     where : {
-                        number : credentials.phone
+                        number : credentials.number
                     }
                 });
 
@@ -37,7 +38,7 @@ export const authOptions = {
                 try {
                     const user = db.user.create({
                         data:{
-                            number : credentials.phone,
+                            number : credentials.number,
                             password: hashedPassword
 
                         }
@@ -60,5 +61,13 @@ export const authOptions = {
         
     ] ,
 
-    secret : 
+    secret : process.env.NEXTAUTH_SECRET ,
+    
+    callbacks :{
+        async session({token , session } :any){
+            session.user.id = token.sub
+
+            return session;
+        }
+    }
 }
