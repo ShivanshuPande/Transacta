@@ -22,8 +22,6 @@ export const authOptions = {
                 });
 
                 if(existingUser){
-                    console.log(`number from the DB of the user ${existingUser.number}`)
-                    console.log(`the password of the user from the DB is ${existingUser.password}`)
                     const passwordValidation = await bcrypt.compare(credentials.password , existingUser.password);
                     if(passwordValidation){
                         return {
