@@ -1,5 +1,22 @@
+import { Button } from "./button";
+
+
+interface AppBarProps {
+    user? :{
+        name? : string | null ;
+    }
+    onSignin :any ,
+    onSignOut : any
+}
 export default function Appbar(){
-    return <div className="flex justify-center items-center">
-    Hello there , this is the app bar component 
-    </div>
+    return (
+        <div>
+            <div>
+                Transacta
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    )
 }
