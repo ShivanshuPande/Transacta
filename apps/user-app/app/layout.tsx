@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import "tailwindcss";
 import Appbar from "@repo/ui/components/appbar";
@@ -15,12 +14,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
 
+    <html> 
       <body>
         <Appbar/> 
         {children}
       </body>
     </html>
+     
+
   );
 }

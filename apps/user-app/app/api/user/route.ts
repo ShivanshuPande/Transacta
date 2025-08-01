@@ -9,7 +9,7 @@ export const GET = async() =>{
         if(session.user){
             
             return NextResponse.json({
-                user : session.user 
+               user : session.user
             })
         }else{
             return NextResponse.json({

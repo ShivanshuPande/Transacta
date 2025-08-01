@@ -1,6 +1,7 @@
 import  db  from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import { JWT } from "next-auth/jwt";
 
 // providers needs the three --- credentialsProvider(getting the credentials(name , credentials) , authorizing it , create it ) , secret , callbacks
 
@@ -9,6 +10,7 @@ export const authOptions = {
         CredentialsProvider({
             name:'Credentials',
             credentials:{
+                name : {label : "Name" , type: "text" , placeholder : "Name" , required :true},
                 number: {label: "Phone Number" , type : 'text' , placeholder : "97XXXXXX09" , required :true}, 
                 password : {label : "Password"  , type : 'password' , placeholder : "password"}
             }, 
@@ -27,7 +29,8 @@ export const authOptions = {
                         return {
                             id : existingUser.id.toString(),
                             name : existingUser.name,
-                            email : existingUser.number
+                            email : existingUser.email,
+                            number : existingUser.number
                         }
                     }
                     return null ;
@@ -37,6 +40,7 @@ export const authOptions = {
                 try {
                     const user = db.user.create({
                         data:{
+                            name : credentials.name ,
                             number : credentials.number,
                             password: hashedPassword
 
@@ -46,7 +50,8 @@ export const authOptions = {
                     return {
                         id : (await user).id.toString(),
                         name : (await user).name ,
-                        email: (await user).email
+                        email: (await user).email,
+                        number:(await user).number
                     }
                 }catch(error){
                     console.log(error)
@@ -63,7 +68,8 @@ export const authOptions = {
     secret : process.env.NEXTAUTH_SECRET ,
     
     callbacks :{
-        async session({token , session } :any){
+
+        async session({token , session } :{token : JWT , session : any}){
             session.user.id = token.sub
 
             return session;
