@@ -23,15 +23,32 @@ app.post("/webhookhdfc" , async (req ,res)=>{
             db.balance.updateMany({
                 where:{
                     userId : Number(paymentInformation.userId)
-                },{
+                },
                     data :{
                         amount : {
-                            
+                            increment : Number(paymentInformation.amount)
                         }
                     }
+                
+            }),
+
+            db.onRampTransaction.updateMany({
+                where : {
+                    token : paymentInformation.token
+                },
+                data :{
+                    status :"Success",
                 }
             })
         ])
+        res.json({
+            message :"session captured"
+        })
+    }catch(e){
+        console.error(e)
+        res.json(411).json({
+            message: "error while processing request"
+        })
     }
 
 })
