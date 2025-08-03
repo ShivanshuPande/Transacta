@@ -1,5 +1,6 @@
 
 import {Appbar} from "@repo/ui/components/appbar";
+import { Card } from "@repo/ui/components/card";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       </div>
       <div>
         <Appbar/>
+        <Card/>
       </div>
         
     </div>
