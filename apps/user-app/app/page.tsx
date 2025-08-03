@@ -1,5 +1,5 @@
-import db from  "@repo/db/client";
-import { Card } from "../../../packages/ui/src/components/card";
+
+import {Appbar} from "@repo/ui/components/appbar";
 
 export default function Home() {
   return (
@@ -7,7 +7,9 @@ export default function Home() {
         <div className="flex justify-center items-center text-5xl font-bold">
         Hello there
       </div>
-          <Card/>
+      <div>
+        <Appbar/>
+      </div>
         
     </div>
   );
