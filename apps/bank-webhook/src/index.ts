@@ -5,7 +5,7 @@ const app = express();
 app.use(express.json());
 
 const port = 3003;
-
+// transaction to create atomicity and to maintain irregularities in the server
 app.post("/webhookhdfc" , async (req ,res)=>{
     const paymentInformation :{
         token :string ,
@@ -53,7 +53,6 @@ app.post("/webhookhdfc" , async (req ,res)=>{
 
 })
 
-// write the code for transaction
 
 app.listen(port);
 
