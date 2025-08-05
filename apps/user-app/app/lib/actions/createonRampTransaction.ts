@@ -1,30 +1,60 @@
-"use server";
-
 import prisma from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
 
-export async function createOnRampTransaction(provider: string, amount: number) {
-    // Ideally the token should come from the banking provider (any bank)
+export async function createOnRampTransaction (provider:string , amount : number) {
     const session = await getServerSession(authOptions);
-    if (!session?.user || !session.user?.id) {
-        return {
-            message: "Unauthenticated request"
+    if(!session?.user || !session?.user?.id){
+        return{
+            message :"This is an Unauthorized Request"
         }
     }
+
     const token = (Math.random() * 1000).toString();
     await prisma.onRampTransaction.create({
-        data: {
-            provider,
-            status: "Processing",
-            startTime: new Date(),
-            token: token,
+        data : {
+            provider ,
+            status : "Processing",
+            startTime : new Date(),
+            token : token,
             userId: Number(session?.user?.id),
-            amount: amount * 100
+            amount :amount * 100
         }
     });
 
     return {
-        message: "Done"
+        message : "Done"
     }
 }
+// "use server";
+
+// import prisma from "@repo/db/client";
+// import { getServerSession } from "next-auth";
+// import { authOptions } from "../auth";
+
+// export async function createOnRampTransaction(provider: string, amount: number) {
+//     // Ideally the token should come from the banking provider (any bank)
+//     const session = await getServerSession(authOptions);
+//     if (!session?.user || !session.user?.id) {
+//         return {
+//             message: "Unauthenticated request"
+//         }
+//     }
+//     const token = (Math.random() * 1000).toString();
+//     await prisma.onRampTransaction.create({
+//         data: {
+//             provider,
+//             status: "Processing",
+//             startTime: new Date(),
+//             token: token,
+//             userId: Number(session?.user?.id),
+//             amount: amount * 100
+//         }
+//     });
+
+//     return {
+//         message: "Done"
+//     }
+// }
+
+
